@@ -1,0 +1,133 @@
+﻿<Window x:Class="BeautifulWeather.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:homeView="clr-namespace:BeautifulWeather.Views.Home"
+        xmlns:locationView="clr-namespace:BeautifulWeather.Views.Location"
+        xmlns:settingsView="clr-namespace:BeautifulWeather.Views.Settings"
+        xmlns:vm="clr-namespace:BeautifulWeather.ViewModels"
+        xmlns:local="clr-namespace:BeautifulWeather"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        FontFamily="/BeautifulWeather;component/Resources/Fonts/#beer money"
+        FontSize="15">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:HomeViewViewModel}">
+            <homeView:HomeView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:LocationViewViewModel}">
+            <locationView:LocationView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SettingsViewViewModel}">
+            <settingsView:SettingsView DataContext="{Binding}"/>
+        </DataTemplate>
+    </Window.Resources>
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid Background="{DynamicResource MainWindowBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="7*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Label
+                 x:Name="SynopticDiagnose_Label"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 Content="Synoptic diagnose"/>
+        <Label
+                 Grid.Column="0"
+                 Grid.ColumnSpan="2"
+                 HorizontalAlignment="Center"
+                 VerticalAlignment="Center"
+                 Content="Weather"/>
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Button
+                    x:Name="SignOut_Button"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    Height="40"
+                    Content="Выйти"
+                    Click="SignOut_Button_Click"/>
+                <Button
+                    x:Name="SignIn_Button"
+                    Height="40"
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Content="Войти"
+                    Click="SignIn_Button_Click"/>
+                <Button
+                    x:Name="Registration_Button"
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Content="Регистрация"
+                    Click="Registration_Button_Click"/>
+                <Label
+                    x:Name="PersonalDesk_Label"
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Content="Личный кабинет"/>
+            </Grid>
+        </Grid>
+        <Grid
+            Grid.Row="1"
+            Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button
+                x:Name="Refresh_Button"
+                Grid.Column="0"
+                Grid.Row="1"
+                Margin="5"
+                MinWidth="40"
+                HorizontalAlignment="Left"/>
+            <Label
+                x:Name="WeatherCurrentPeriod_Label"
+                Grid.Column="1"
+                Grid.Row="0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"/>
+        </Grid>
+        <StackPanel Grid.Row="2" Orientation="Vertical">
+            <Button Content="Home"
+                    Style="{StaticResource LeftPanelButton}"
+                    Command="{Binding Path=HomeCommand}"/>
+            <Button Content="Location"
+                    Style="{StaticResource LeftPanelButton}"
+                    Command="{Binding Path=LocationCommand}"/>
+            <Button Content="Settings"
+                    Style="{StaticResource LeftPanelButton}"
+                    Command="{Binding Path=SettingsCommand}"/>
+            <Button Content="Close"
+                    Style="{StaticResource LeftPanelButton}"
+                    Command="{Binding Path=CloseCommand}"/>
+        </StackPanel>
+        <Grid Grid.Column="1" Grid.Row="3">
+            <ContentControl Content="{Binding SelectedContent}"/>
+        </Grid>
+    </Grid>
+</Window>
